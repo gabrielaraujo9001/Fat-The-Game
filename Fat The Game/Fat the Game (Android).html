@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CreateJS export from Fat the Game (Android)</title>
+
+<script src="http://code.createjs.com/easeljs-0.6.0.min.js"></script>
+<script src="http://code.createjs.com/tweenjs-0.4.0.min.js"></script>
+<script src="http://code.createjs.com/movieclip-0.6.0.min.js"></script>
+<script src="http://code.createjs.com/preloadjs-0.3.0.min.js"></script>
+<script src="http://code.createjs.com/soundjs-0.4.0.min.js"></script>
+<script src="Fat the Game (Android).js"></script>
+
+<script>
+var canvas, stage, exportRoot;
+
+function init() {
+	canvas = document.getElementById("canvas");
+
+	var manifest = [
+		{src:"sounds/SomAtingidoBonus.mp3", id:"SomAtingidoBonus"},
+		{src:"sounds/SomAtingidoInimigo.mp3", id:"SomAtingidoInimigo"},
+		{src:"sounds/SomBotaoPressionado.mp3", id:"SomBotaoPressionado"},
+		{src:"sounds/SomBotaoPressionadoReverso.mp3", id:"SomBotaoPressionadoReverso"},
+		{src:"sounds/SomFim.mp3", id:"SomFim"},
+		{src:"sounds/SomMouseSobre.mp3", id:"SomMouseSobre"},
+		{src:"sounds/MusicaDeFundo.mp3", id:"MusicaDeFundo"},
+		{src:"sounds/SomJogadorMorre.mp3", id:"SomJogadorMorre"},
+		{src:"sounds/SomZeraContador.mp3", id:"SomZeraContador"}
+	];
+
+	var loader = new createjs.LoadQueue(false);
+	loader.installPlugin(createjs.Sound);
+	loader.addEventListener("complete", handleComplete);
+	loader.loadManifest(manifest);
+}
+
+function handleComplete() {
+	exportRoot = new lib.DocumentClass();
+
+	stage = new createjs.Stage(canvas);
+	stage.addChild(exportRoot);
+	stage.update();
+	stage.enableMouseOver();
+
+	createjs.Ticker.setFPS(24);
+	createjs.Ticker.addEventListener("tick", stage);
+}
+
+function playSound(id, loop) {
+	createjs.Sound.play(id, createjs.Sound.INTERRUPT_EARLY, 0, 0, loop);
+}
+</script>
+</head>
+
+<body onload="init();" style="background-color:#D4D4D4">
+	<canvas id="canvas" width="800" height="480" style="background-color:#cc6633"></canvas>
+</body>
+</html>
